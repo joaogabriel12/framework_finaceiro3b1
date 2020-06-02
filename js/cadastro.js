@@ -37,8 +37,8 @@ function cadastrar() {
                 cep: document.getElementById("cep").value,
                 status: "Ativo",
                 senha: document.getElementById("senha").value,
-                entrada: 0,
-                saida: 0,
+                entrada:[],
+                saida: [],
                 totalo: 0,
                 id: Date.now()
             }
@@ -186,7 +186,7 @@ function entrada() {
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim'
             }).then((result) => {
-                Usuario[Usuarioindex].entrada += parseInt(val)
+                Usuario[Usuarioindex].entrada.push(val)
                 Usuario[Usuarioindex].totalo += parseInt(val)
                 window.localStorage.setItem("usuarios", JSON.stringify(Usuario))
                 
@@ -209,7 +209,7 @@ function entrada() {
         }
     }
     
-    // alerte()
+    
 }
 function saida() {
    
@@ -236,7 +236,7 @@ function saida() {
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sim'
             }).then((result) => {
-                Usuario[Usuarioindex].entrada -= parseInt(val)
+                Usuario[Usuarioindex].saida.push(val)
                 Usuario[Usuarioindex].totalo -= parseInt(val)
                 window.localStorage.setItem("usuarios", JSON.stringify(Usuario))
                 
@@ -268,7 +268,8 @@ function listar(user){
     let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
     let htmlTotal=Usuario[user].totalo
     
-    
+    document.getElementById("entrada").innerHTML=Usuario[user].entrada.length
+    document.getElementById("saida").innerHTML=Usuario[user].saida.length
 
     document.getElementById("total").innerHTML="R$ "+parseFloat(htmlTotal).toFixed(2)
    
