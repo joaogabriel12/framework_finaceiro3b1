@@ -96,7 +96,7 @@ function login() {
     if (emailindex2 >= 0) {
         let senhapagina = document.getElementById("senha").value
         if (emaillocaS[emailindex2].senha === senhapagina) {
-            const Toast = Swal.mixin({
+            if(emaillocaS[emailindex2].status==="Ativo"){const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
@@ -117,6 +117,8 @@ function login() {
             }), 900;
             document.getElementById("email").value = ""
             window.localStorage.setItem('dados', JSON.stringify(emaillocaS[emailindex2].id))
+        }
+            
            
 
 
