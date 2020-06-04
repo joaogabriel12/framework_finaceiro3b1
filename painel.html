@@ -41,14 +41,23 @@
  
 <div class="row">
 <div class="col-lg-4">
-  <div style="   border-radius:20px ;" class="card a2 ml-1">
+  <div style="   border-radius:20px ;" class="card a2 ml-2">
     <div style="   border-radius:20px ;" class="card-header color">
       <img src="img/cash.png"> <h2 class="textlogin">Atualizar Valores</h2>
       
     </div>
-    <div style="   border-radius:20px ;"  class="card-body color">
+    <div style="   border-radius:20px ;"  class="card-body color ">
         
-      <input autocomplete="off" placeholder="Digite um Valor"  class="form-control " id="val" type="number">
+      <input autocomplete="off" placeholder="Digite um Valor"  class="form-control " id="val" type="text">
+      <h5 class=" mt-2">Tipos de Saída</h5>
+      <select  class="form-control" id="saidaT">
+        <option value="A">Alimentação</option>
+        <option value="C">Contas Fixas</option>
+        <option value="E">Entretenimento</option>
+        <option value="I">Imprevistos</option>
+        <option value="O">Outros</option>
+      </select>
+      
       
       
       <button onclick="entrada()" class="btn btn-success mt-3">Entrada</button>
@@ -58,31 +67,31 @@
 
 </div>
 
+
 </div>
 <div class="col-lg-4">
   <div style="   border-radius:20px ;" class="card a2 ml-1 mr-1">
     
-    <h1 >Entradas</h1> <h1 id="entrada"></h1>  
+    <h2 class="q" >Entradas</h2> <h2 class="q" id="entrada"></h2>  
     
 
 </div>
 <div style="   border-radius:20px ;" class="card a2 ml-1 mr-1">
+  <h2 >Saídas</h2>  <h2 id="saida"></h2>
+  <div id="tiposSaidas">
+   </div>
     
-    <h1 >Saídas</h1>  <h1 id="saida"></h1>
-   
-
-</div>
+ </div>
  
 
   
 </div>
 <div class="col-lg-4">
+  
   <div style="   border-radius:20px ;" class="card a2 ml-1 mr-1">
-    
     <h1 >Total</h1>   <h1 id="total"></h1>
     <h2 id="alertar"></h2>
-
-</div>
+  </div>
   
 
 </div>
