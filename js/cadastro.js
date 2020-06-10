@@ -303,152 +303,170 @@ function listar(user) {
     document.getElementById("total").innerHTML = "R$ " + parseFloat(htmlTotal).toFixed(2)
 
 
- listar2(user)
+    listar2(user)
 }
 function listar2() {
     let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
     if (Usuario[user].alimentaçao != null) {
         let sair = Usuario[user].alimentaçao
         let linha = "";
+        let total = 0
+
 
         if (Usuario[user].alimentaçao != null) {
 
             if (sair) {
 
                 for (var x = 0; x < sair.length; x++) {
+                    total += parseInt(sair[x])
                     row = document.getElementById("tiposSaidas");
-                    if (row != null) {
-                        linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mt-2 mb-2'>" +
-                            "<h4><b>-Alimentação:R$ " + parseFloat(sair[x]).toFixed(2) + "</b></h4>" +
-                            "</div>";
-                        row.innerHTML = linha;
-                    }
-                };
-
-
-
-            }
-        }
-    }
-
-            if (Usuario[user].contas != null) {
-                let sair = Usuario[user].contas
-                let linha = "";
-
-                if (Usuario[user].contas != null) {
-
-                    if (sair) {
-
-                        for (var x = 0; x < sair.length; x++) {
-                            row = document.getElementById("tiposSaidas");
-                            if (row != null) {
-                                linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
-                                    "<h4><b>-Contas Fixas:R$ " + parseFloat(sair[x]).toFixed(2) + "</b></h4>" +
-                                    "</div>";
-                                row.innerHTML += linha;
-                            }
-                        }
-                    }
-                };
-            }
-
-
-        
-
-
-        if (Usuario[user].entrete != null) {
-            let sair = Usuario[user].entrete
-            let linha = "";
-
-            if (Usuario[user].entrete != null) {
-
-                if (sair) {
-
-                    for (var x = 0; x < sair.length; x++) {
-                        row = document.getElementById("tiposSaidas");
-                        if (row != null) {
-                            linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
-                                "<h4><b>-Entretenimento:R$ " + parseFloat(sair[x]).toFixed(2) + "</b></h4>" +
-                                "</div>";
-                            row.innerHTML += linha;
-                        }
-                    };
 
                 }
-            }
-        }
-
-
-            if (Usuario[user].imprevisto != null) {
-                let sair = Usuario[user].imprevisto
-                let linha = "";
-
-                if (Usuario[user].imprevisto != null) {
-
-                    if (sair) {
-
-                        for (var x = 0; x < sair.length; x++) {
-                            row = document.getElementById("tiposSaidas");
-                            if (row != null) {
-                                linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
-                                    "<h4><b>-Imprevistos:R$ " + parseFloat(sair[x]).toFixed(2) + "</b></h4>" +
-                                    "</div>";
-                                row.innerHTML += linha;
-                            }
-                        }
-                    };
-
-            
-                }
-            }
-                if (Usuario[user].outro != null) {
-                    let sair = Usuario[user].outro
-                    let linha = "";
-
-                    if (Usuario[user].outro != null) {
-
-                        if (sair) {
-
-                            for (var x = 0; x < sair.length; x++) {
-                                row = document.getElementById("tiposSaidas");
-                                if (row != null) {
-                                    linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
-                                        "<h4><b>-Outros:R$ " + parseFloat(sair[x]).toFixed(2) + "</b></h4>" +
-                                        "</div>";
-                                    row.innerHTML += linha;
-                                }
-                            };
-                        }
-                    }
-                }
-            
-
-
-
+                if (row != null) {
+                    linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mt-2 mb-2'>" +
+                        "<h4><b>"+sair.length+"-Alimentação:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
+                        "</div>";
+                    row.innerHTML = linha;
             }
 
 
-    function alerte() {
-        let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
-        let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
-
-        let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
-
-        if (Usuario[Usuariofind].totalo < 0) {
-            Swal.fire({
-
-                icon: 'warning',
-                title: 'Seu saldo esta negativo!',
-                showConfirmButton: false,
-                timer: 1500
-            });
-            document.getElementById("alertar").innerHTML = "Saldo Negativo!"
-        }
-        else {
-            document.getElementById("alertar").innerHTML = ""
 
         }
     }
+}
+
+if (Usuario[user].contas != null) {
+    let sair = Usuario[user].contas
+    let linha = "";
+    let total = 0
+
+    if (Usuario[user].contas != null) {
+
+        if (sair) {
+
+            for (var x = 0; x < sair.length; x++) {
+                total += parseInt(sair[x])
+
+
+            }
+            row = document.getElementById("tiposSaidas");
+            if (row != null) {
+                linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
+                    "<h4><b>"+sair.length+"-Contas Fixas:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
+                    "</div>";
+                row.innerHTML += linha;
+                console.log(total)
+            }
+        }
+    };
+}
+
+
+
+
+
+if (Usuario[user].entrete != null) {
+    let sair = Usuario[user].entrete
+    let linha = "";
+    let total=0
+
+    if (Usuario[user].entrete != null) {
+
+        if (sair) {
+
+            for (var x = 0; x < sair.length; x++) {
+                total += parseInt(sair[x])
+                
+                }
+            };
+            row = document.getElementById("tiposSaidas");
+                if (row != null) {
+                    linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
+                        "<h4><b>"+sair.length+"-Entretenimento:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
+                        "</div>";
+                    row.innerHTML += linha;
+
+        }
+    }
+}
+
+
+if (Usuario[user].imprevisto != null) {
+    let sair = Usuario[user].imprevisto
+    let linha = "";
+    let total=0
+
+    if (Usuario[user].imprevisto != null) {
+
+        if (sair) {
+
+            for (var x = 0; x < sair.length; x++) {
+                total += parseInt(sair[x])
+                
+                }
+                row = document.getElementById("tiposSaidas");
+                if (row != null) {
+                    linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
+                        "<h4><b>"+sair.length+"-Imprevistos:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
+                        "</div>";
+                    row.innerHTML += linha;
+            }
+        };
+
+
+    }
+}
+if (Usuario[user].outro != null) {
+    let sair = Usuario[user].outro
+    let linha = "";
+    let total=0
+
+    if (Usuario[user].outro != null) {
+
+        if (sair) {
+
+            for (var x = 0; x < sair.length; x++) {
+                total += parseInt(sair[x])
+               
+            }
+            row = document.getElementById("tiposSaidas");
+            if (row != null) {
+                linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
+                    "<h4><b>"+sair.length+"-Outros:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
+                    "</div>";
+                row.innerHTML += linha;
+            }
+        }
+    }
+}
+            
+
+
+
+            }
+
+
+function alerte() {
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+
+    if (Usuario[Usuariofind].totalo < 0) {
+        Swal.fire({
+
+            icon: 'warning',
+            title: 'Seu saldo esta negativo!',
+            showConfirmButton: false,
+            timer: 1500
+        });
+        document.getElementById("alertar").innerHTML = "Saldo Negativo!"
+    }
+    else {
+        document.getElementById("alertar").innerHTML = ""
+
+    }
+}
 
 
 
@@ -456,26 +474,26 @@ function listar2() {
 
 
 
-            //   function perfil(user){
+//   function perfil(user){
 
-            //     let usuarios = JSON.parse(window.localStorage.getItem("usuarios"))
+//     let usuarios = JSON.parse(window.localStorage.getItem("usuarios"))
 
-            //      console.log(usuarios[user].nome)
-            //      if(usuarios[user].nome!=null){
-            //            document.getElementById("nome").value=usuarios[user].nome
-            //     document.getElementById("email").value=usuarios[user].email
-            //     document.getElementById("telefone").value=usuarios[user].telefone
-            //     document.getElementById("cep").value=usuarios[user].cep
-            //     document.getElementById("status").value=usuarios[user].status
-            //     document.getElementById("senha").value=usuarios[user].senha
-            //     }
-
-
-
-            //  }
+//      console.log(usuarios[user].nome)
+//      if(usuarios[user].nome!=null){
+//            document.getElementById("nome").value=usuarios[user].nome
+//     document.getElementById("email").value=usuarios[user].email
+//     document.getElementById("telefone").value=usuarios[user].telefone
+//     document.getElementById("cep").value=usuarios[user].cep
+//     document.getElementById("status").value=usuarios[user].status
+//     document.getElementById("senha").value=usuarios[user].senha
+//     }
 
 
-        
-            listar(user)
-// alerte()
+
+//  }
+
+
+
+listar(user)
+alerte()
 // perfil()
