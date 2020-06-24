@@ -1,0 +1,83 @@
+
+.a1{
+   
+    
+    margin-top: 15%;
+ 
+    border-color: rgb(38, 73, 115);
+    background-color: rgb(38, 73, 115);
+}
+.textlogin{
+    font-size: 30px;
+    text-align: center;
+    margin-top: -11%;
+    color: white;
+    
+    
+   
+
+}
+.color{
+    background-color: rgb(38, 73, 115);
+    border-color: rgb(38, 73, 115);
+ 
+}
+.btnentrar{
+    background-color: rgb(90, 172, 222);
+    color: white;
+    border-color: white;
+}
+.btncadastrar{
+    background-color: rgb(38, 73, 115);
+    border-color: white;
+    color: white;
+
+}
+.imgmoney{
+    height: 90px;
+    width: 90px;
+    margin-top: 4%;
+
+}
+.a2{
+   
+    
+    margin-top: 3%;
+ 
+    border-color: rgb(38, 73, 115);
+    background-color: rgb(38, 73, 115);
+}
+.bk{  
+    background-color: rgb(38, 73, 115);
+    
+}
+/* span.navbar-toggler-icon.item{
+color: white;
+} */
+ .link1{
+     color: white;
+ }
+
+
+ h1{ color: white;
+text-align: center;
+ }
+ h2{
+     color: red;
+     text-align: center;
+    
+ }
+ h4{
+     color: red;
+ }
+ .a3{
+     background-color: rgb(90, 172, 222);
+     text-align: center;
+     color: white;
+ }
+.q{
+    color: green;
+}
+h5{
+    color: white;
+}
