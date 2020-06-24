@@ -37,13 +37,10 @@ function cadastrar() {
                 cep: document.getElementById("cep").value,
                 status: "Ativo",
                 senha: document.getElementById("senha").value,
-                entrada: [],
-                saida: [],
-                alimentaçao: [],
-                contas: [],
-                entrete: [],
-                imprevisto: [],
-                outro: [],
+                entradaesaida: [],
+              
+                categorias:[],
+                contas:[],
                 totalo: 0,
                 id: Date.now()
             }
@@ -154,7 +151,6 @@ function login() {
 
 
 
-
 }
 
 let user = 0
@@ -165,285 +161,67 @@ function usuario() {
     user = usuarios.findIndex(usuario => usuario.id === Dados)
 
 }
-
-
-function entrada() {
-
-    let val = document.getElementById("val").value
-    let usuarioD = JSON.parse(window.localStorage.getItem("dados"))
+let padrao=0
+let total=0
+let total1=0
+function tipo(){
     let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
-    let Usuarioindex = Usuario.findIndex(usuario => usuario.id === usuarioD)
-    user = Usuarioindex
-    if (Usuarioindex >= 0) {
-        if (val == "") {
-            Swal.fire({
-
-                icon: 'warning',
-                title: 'Digite um valor',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        } else {
-            Swal.fire({
-                title: 'Deseja inserir esse Valor de Entrada?',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim'
-            }).then((result) => {
-                Usuario[Usuarioindex].entrada.push(val)
-                Usuario[Usuarioindex].totalo += parseInt(val)
-                window.localStorage.setItem("usuarios", JSON.stringify(Usuario))
+    let Despesasereceitas=Usuario[user].entradaesaida
+    let conta=Usuario[user].contas
+    
 
 
-                if (result.value) {
-
-
-                    Swal.fire(
-                        'Valor Inserido!',
-                        document.getElementById("val").value = "",
-                        alerte(),
-                        listar(user)
-
-
-                    )
+    
+        for(x in Despesasereceitas ){
+     
+            if(Despesasereceitas[x].conta==conta[padrao].nome){
+                if( conta[padrao].tipo=="Receita"){
+                    total+=parseInt(Despesasereceitas[x].valor)
+                    document.getElementById("Receitas").innerHTML="R$"+parseFloat(total).toFixed(2)
                 }
-            })
-
+                else{
+                    total1+=parseInt(Despesasereceitas[x].valor)
+                    document.getElementById("Despesas").innerHTML="R$"+parseFloat(total1).toFixed(2)
+                }
+             
+            }
+        }
+        console.log(total1,total)
+        padrao+=1
+      
+        if(padrao<=Despesasereceitas.length ){
+            tipo()
+          
 
         }
-    }
-
-
+       
+    
 }
-function saida() {
-    let tipo = ""
-    let tiposaida = document.getElementById("saidaT").value
-    let val = document.getElementById("val").value
-    let usuarioD = JSON.parse(window.localStorage.getItem("dados"))
-    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
-    let Usuarioindex = Usuario.findIndex(usuario => usuario.id === usuarioD)
-    user = Usuarioindex
 
-
-    if (Usuarioindex >= 0) {
-        if (val == "") {
-            Swal.fire({
-
-                icon: 'warning',
-                title: 'Digite um valor',
-                showConfirmButton: false,
-                timer: 1500
-            });
-
-        } else {
-            if (tiposaida === "A") {
-                Usuario[Usuarioindex].alimentaçao.push(val)
-                tipo = "Alimentação"
-            }
-            else if (tiposaida === "C") {
-                Usuario[Usuarioindex].contas.push(val)
-                tipo = "Contas Fixas"
-            }
-            else if (tiposaida === "E") {
-                Usuario[Usuarioindex].entrete.push(val)
-                tipo = "Entretenimento"
-            }
-            else if (tiposaida === "I") {
-                Usuario[Usuarioindex].imprevisto.push(val)
-                tipo = "Imprevistos"
-            }
-            else {
-                Usuario[Usuarioindex].outro.push(val)
-                tipo = "Outros"
-            }
-            Swal.fire({
-                title: `Deseja inserir esse Valor de Saída em ${tipo}?`,
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim'
-            }).then((result) => {
-
-                Usuario[Usuarioindex].saida.push(val)
-                Usuario[Usuarioindex].totalo -= parseInt(val)
-                window.localStorage.setItem("usuarios", JSON.stringify(Usuario))
-
-
-                if (result.value) {
-
-                    debugger
-                    Swal.fire(
-                        'Valor Atualizado!',
-                        document.getElementById("val").value = "",
-
-                        alerte(),
-                        listar(user)
-
-
-                    )
-                }
-            })
-
-
-        }
-
-    }
-
-
-}
 
 function listar(user) {
     let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
     let htmlTotal = Usuario[user].totalo
-    document.getElementById("entrada").innerHTML = Usuario[user].entrada.length
-    document.getElementById("saida").innerHTML = Usuario[user].saida.length
-    document.getElementById("total").innerHTML = "R$ " + parseFloat(htmlTotal).toFixed(2)
+   
+    
 
 
-    listar2(user)
-}
-function listar2() {
-    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
-    if (Usuario[user].alimentaçao != null) {
-        let sair = Usuario[user].alimentaçao
-        let linha = "";
-        let total = 0
+    
+    
+  
+    
+
+    
+   document.getElementById("total").innerHTML="R$"+parseFloat(htmlTotal).toFixed(2)
+   tipo()
+//    document.getElementById("Despesas").innerHTML="R$"+parseFloat(Usuario[user].saida[leng-1].total).toFixed(2)
+//    document.getElementById("Receitas").innerHTML="R$"+parseFloat(htmlTotal+Usuario[user].saida[leng-1].total).toFixed(2)
+    
 
 
-        if (Usuario[user].alimentaçao != null) {
-
-            if (sair) {
-
-                for (var x = 0; x < sair.length; x++) {
-                    total += parseInt(sair[x])
-                    row = document.getElementById("tiposSaidas");
-
-                }
-                if (row != null) {
-                    linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mt-2 mb-2'>" +
-                        "<h4><b>"+sair.length+"-Alimentação:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
-                        "</div>";
-                    row.innerHTML = linha;
-            }
-
-
-
-        }
-    }
+    
 }
 
-if (Usuario[user].contas != null) {
-    let sair = Usuario[user].contas
-    let linha = "";
-    let total = 0
-
-    if (Usuario[user].contas != null) {
-
-        if (sair) {
-
-            for (var x = 0; x < sair.length; x++) {
-                total += parseInt(sair[x])
-
-
-            }
-            row = document.getElementById("tiposSaidas");
-            if (row != null) {
-                linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
-                    "<h4><b>"+sair.length+"-Contas Fixas:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
-                    "</div>";
-                row.innerHTML += linha;
-                console.log(total)
-            }
-        }
-    };
-}
-
-
-
-
-
-if (Usuario[user].entrete != null) {
-    let sair = Usuario[user].entrete
-    let linha = "";
-    let total=0
-
-    if (Usuario[user].entrete != null) {
-
-        if (sair) {
-
-            for (var x = 0; x < sair.length; x++) {
-                total += parseInt(sair[x])
-                
-                }
-            };
-            row = document.getElementById("tiposSaidas");
-                if (row != null) {
-                    linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
-                        "<h4><b>"+sair.length+"-Entretenimento:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
-                        "</div>";
-                    row.innerHTML += linha;
-
-        }
-    }
-}
-
-
-if (Usuario[user].imprevisto != null) {
-    let sair = Usuario[user].imprevisto
-    let linha = "";
-    let total=0
-
-    if (Usuario[user].imprevisto != null) {
-
-        if (sair) {
-
-            for (var x = 0; x < sair.length; x++) {
-                total += parseInt(sair[x])
-                
-                }
-                row = document.getElementById("tiposSaidas");
-                if (row != null) {
-                    linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
-                        "<h4><b>"+sair.length+"-Imprevistos:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
-                        "</div>";
-                    row.innerHTML += linha;
-            }
-        };
-
-
-    }
-}
-if (Usuario[user].outro != null) {
-    let sair = Usuario[user].outro
-    let linha = "";
-    let total=0
-
-    if (Usuario[user].outro != null) {
-
-        if (sair) {
-
-            for (var x = 0; x < sair.length; x++) {
-                total += parseInt(sair[x])
-               
-            }
-            row = document.getElementById("tiposSaidas");
-            if (row != null) {
-                linha += "<div style='border-radius:20px ;' class='card a3 ml-1 mr-1 mb-2'>" +
-                    "<h4><b>"+sair.length+"-Outros:R$ " + parseFloat(total).toFixed(2) + "</b></h4>" +
-                    "</div>";
-                row.innerHTML += linha;
-            }
-        }
-    }
-}
-            
-
-
-
-            }
 
 
 function alerte() {
@@ -469,8 +247,381 @@ function alerte() {
 }
 
 
+function categoria(){
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+    
+    Usuario[Usuariofind].categorias.push({
+        nome:document.getElementById("nomecategoria").value,
+        id:Date.now()
+    })
+    window.localStorage.setItem("usuarios", JSON.stringify(Usuario))
+    document.getElementById("nomecategoria").value=""
+listaC()
+}
+
+function listarcategoriaeconta(){
+    let linha=""
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+    let categoriagravado=Usuario[Usuariofind].categorias
+    if(categoriagravado){
+        categoriagravado.forEach(categorias=>{
+            row=document.getElementById("saidaT")
+            if(row !=null){
+                linha+="<option value="+categorias.id+">"+categorias.nome+"</option>"
+                row.innerHTML=linha
+            }
+
+        })
+       
+    }
+    let contagravado=Usuario[Usuariofind].contas
+    if(contagravado){
+        contagravado.forEach(contas=>{
+            row=document.getElementById("lancamentos")
+            if(row !=null){
+                linha+="<option value="+contas.categoria+">"+contas.nome+"</option>"
+                row.innerHTML=linha
+            }
+
+        })
+       
+    }
+    
+}
+
+function listarcontas(){
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+    let nome=document.getElementById("nome").value
+    let tipo=document.getElementById("tipos").value
+    let categoria=document.getElementById("saidaT").value
+    let categoriagravado=Usuario[Usuariofind].categorias
+    let catefind=categoriagravado.findIndex(categoriA=>categoriA.id==categoria)
+
+    
+     
+    Usuario[Usuariofind].contas.push({
+        nome:nome,
+        tipo:tipo,
+        categoria:categoriagravado[catefind].nome
+    })
+    window.localStorage.setItem("usuarios",JSON.stringify(Usuario))
+
+document.getElementById("nome").value=""
+listartabelacontas()
+
+}
+function lancamentos() {
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+    let valor=document.getElementById("valor").value
+    let tipoconta=document.getElementById("lancamentos").value
+    debugger
+    let contagravado=Usuario[Usuariofind].contas
+   let contafind=contagravado.findIndex(contas=>contas.categoria===tipoconta)
+ let Conta=contagravado[contafind].tipo
 
 
+
+
+var select = document.querySelector('select');
+var option = select.children[select.selectedIndex];
+var texto = option.textContent;
+var data = new Date();
+var dia     = data.getDate();  
+var mes     = data.getMonth()+parseInt(1); 
+var ano4    = data.getFullYear();
+ 
+Usuario[Usuariofind].entradaesaida.push(
+    {
+        conta:texto,
+        valor:valor,
+        data:dia+"/"+mes+"/"+ano4
+
+
+    }   )
+
+
+ 
+  
+  if(Conta==="Receita"){
+      
+    Usuario[Usuariofind].totalo+=parseInt(valor)
+       }
+       else{
+        Usuario[Usuariofind].totalo-=parseInt(valor)
+            
+        }
+        
+       window.localStorage.setItem("usuarios",JSON.stringify(Usuario))
+       document.getElementById("valor").value=""
+       listartabelacontas()
+}
+function listartabelacontas(){
+    let linha = "";
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+    let contagravado=Usuario[Usuariofind].contas
+    let categoriagravado=Usuario[Usuariofind].categorias
+  
+    if(contagravado){ 
+        
+        contagravado.forEach(contas => {
+         row = document.getElementById("bd");
+         
+         let catfind=categoriagravado.findIndex(cate=>cate.nome===contas.categoria)
+         let id=0
+         if(catfind>-1){ 
+              id=categoriagravado[catfind].id
+        }
+         else{
+            //  alert("essa categoria nao existe")
+             id= null
+         }
+       
+         if(row != null){
+          linha += "<tr>"+
+          "<td id='tdnome'>"+contas.nome +"</td>"+
+          "<td id='tdnome'>"+contas.tipo +"</td>"+
+          "<td id='tdnome'>"+contas.categoria +"</td>"+
+          "<td id='tdacoes'><button class='btn btn-outline-success' onclick='editarcontas("+id+")'><i class='fa fa-edit'></i></button>"+
+          "<button class='btn btn-outline-danger'onclick='apagarUsuario("+id+")'><i class='mt -2 fa fa-trash'></i></button></td>"
+             "</tr>";
+         row.innerHTML = linha;        
+         }   
+       });
+      
+       
+       }
+     
+      
+       let entradagravado=Usuario[Usuariofind].entradaesaida
+       if(entradagravado){ 
+        entradagravado.forEach(entradaesaida => {
+         row = document.getElementById("bad");
+         if(row != null){
+          linha += "<tr>"+
+          "<td id='tdnome'>"+entradaesaida.conta +"</td>"+
+          "<td id='tdnome'>"+entradaesaida.valor +"</td>"+
+          "<td id='tdnome'>"+entradaesaida.data+"</td>"+
+          "<td id='tdacoes'><button class='btn btn-outline-success' onclick='editarvalores("+entradaesaida.valor+")'><i class='fa fa-edit'></i></button>"+
+          "<button class='btn btn-outline-danger'onclick='apagarUsuario("+entradaesaida.valor+")'><i class='mt -2 fa fa-trash'></i></button></td>"
+             "</tr>";
+         row.innerHTML = linha;        
+         }   
+       });
+      
+       
+       }
+ 
+    
+     
+
+ 
+    
+
+   
+ 
+  
+}
+function listaC(){
+    
+    let linha = "";
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+    let categravado=Usuario[Usuariofind].categorias
+    
+  
+   
+     
+      
+       
+       if( categravado){ 
+        categravado.forEach(categoria => {
+         row = document.getElementById("cat");
+         if(row != null){
+          linha += "<tr>"+
+          "<td id='tdnome'>"+categoria.nome +"</td>"+
+          "<td id='tdacoes'><button class='btn btn-outline-success' onclick='editarUsuarioC("+categoria.id+")'><i class='fa fa-edit'></i></button>"+
+          "<button class='btn btn-outline-danger'onclick='apagarUsuario("+categoria.id+")'><i class='mt -2 fa fa-trash'></i></button></td>"
+         
+             "</tr>";
+         row.innerHTML = linha;        
+         }   
+       });
+      
+       
+       }
+
+}
+
+function editarUsuarioC(id){
+    document.getElementById("btn").disabled=false
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+    let categravado=Usuario[Usuariofind].categorias
+categorianome=categravado.findIndex(categoriA=>categoriA.id===id)
+
+let valor=categravado[categorianome].nome
+    
+    document.getElementById("nomecategoria").value=valor
+    window.localStorage.setItem("id",JSON.stringify(id))
+
+}
+
+ function alterar(){
+     let idlocal=JSON.parse(window.localStorage.getItem("id"))
+     let nome=document.getElementById("nomecategoria").value
+     let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+     let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+     let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+     let categravado=Usuario[Usuariofind].categorias
+     let categorianome=categravado.findIndex(categoriA=>categoriA.id===idlocal)
+   
+   let id =categravado[categorianome].id
+   
+ 
+  
+    // como fazer para atualiza a posicao do array
+   categravado[categorianome] = {nome,id}
+   window.localStorage.setItem("usuarios",JSON.stringify(Usuario))
+   document.getElementById("btn").disabled=true
+   listaC()
+ }
+
+ function editarcontas(id){
+     if(id===null){
+         alert("essa categoria n existe")
+     }
+    // document.getElementById("btn").disabled=false
+  
+    
+    let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+    let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+    let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+    let categravado=Usuario[Usuariofind].categorias
+    let catefind=categravado.findIndex(categoria=>categoria.id===id)
+    let nome=categravado[catefind].nome
+   let contagravado=Usuario[Usuariofind].contas
+   let  contafind=contagravado.findIndex(conta=>conta.categoria===nome)
+   
+ let valor=contagravado[contafind].tipo
+    console.log(valor)
+    document.getElementById("saidaT").value=id
+    document.getElementById("tipos").value=valor
+    document.getElementById("nome").value=contagravado[contafind].nome
+
+     window.localStorage.setItem("nome",JSON.stringify(contagravado[contafind].nome))
+     
+
+ }
+function alterarC(){
+    let idlocal=JSON.parse(window.localStorage.getItem("nome"))
+     let nome=document.getElementById("nome").value
+     let categoria=document.getElementById("saidaT").value
+     let tipo=document.getElementById("tipos").value
+     let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+     let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+     let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+     let categoriagravado=Usuario[Usuariofind].categorias
+     let catefind=categoriagravado.findIndex(categoriA=>categoriA.id==categoria)
+ 
+    
+     
+
+
+     let congravado=Usuario[Usuariofind].contas
+     let contafind=congravado.findIndex(categoriA=>categoriA.nome===idlocal)
+   
+   
+     congravado[contafind]={nome,tipo,categoria:categoriagravado[catefind].nome}
+   
+ console.log(Usuario)
+  
+    // como fazer para atualiza a posicao do array
+
+   window.localStorage.setItem("usuarios",JSON.stringify(Usuario))
+//    document.getElementById("btn").disabled=true
+listartabelacontas()
+
+}
+
+    function editarvalores(valor){
+        
+     let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+     let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+     let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+     let entradasaida=Usuario[Usuariofind].entradaesaida
+     let catefind=entradasaida.findIndex(categoriA=>categoriA.valor==valor)
+     let es=entradasaida[catefind]
+
+  
+document.getElementById("valor").value=es.valor
+document.getElementById("lancamentos").value=es.conta
+
+    //  let congravado=Usuario[Usuariofind].contas
+    //  let contafind=congravado.findIndex(categoriA=>categoriA.nome===idlocal)
+   
+   
+    
+   
+    window.localStorage.setItem("valor",JSON.stringify(valor))
+  
+    // como fazer para atualiza a posicao do array
+
+   
+    }
+        function AlterarE(){ let idlocal=JSON.parse(window.localStorage.getItem("valor"))
+     let valor=document.getElementById("valor").value
+     let lancamentos=document.getElementById("lancamentos").value
+     
+     let Usuario = JSON.parse(window.localStorage.getItem("usuarios"))
+     let usuarioA = JSON.parse(window.localStorage.getItem("dados"))
+     let Usuariofind = Usuario.findIndex(usuario => usuario.id === usuarioA)
+     let entradasaida=Usuario[Usuariofind].entradaesaida
+     let catefind=entradasaida.findIndex(categoriA=>categoriA.valor==idlocal)
+     let es=entradasaida[catefind]
+     var data = new Date();
+var dia     = data.getDate();  
+var mes     = data.getMonth()+parseInt(1); 
+var ano4    = data.getFullYear();
+ 
+
+console.log(lancamentos)
+
+
+     entradasaida[catefind]={lancamentos,valor, data:dia+"/"+mes+"/"+ano4}
+    
+     
+
+
+     let congravado=Usuario[Usuariofind].contas
+     let contafind=congravado.findIndex(categoriA=>categoriA.nome===idlocal)
+   
+   
+   
+   
+ alert(lancamentos)
+  
+    // como fazer para atualiza a posicao do array
+
+   window.localStorage.setItem("usuarios",JSON.stringify(Usuario))
+//    document.getElementById("btn").disabled=true
+listartabelacontas()
+
+}
+       
 
 
 
@@ -492,8 +643,10 @@ function alerte() {
 
 //  }
 
-
-
+listartabelacontas()
+listarcategoriaeconta()
+listaC()
 listar(user)
 alerte()
+
 // perfil()

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Finanaceiro</title>
+  <title>Lançamentos</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body style="background-color:rgb(90, 172, 222) ;">
+<body style="background-color:rgb(90, 172, 222) ;" >
   <nav class="navbar navbar-expand-md bk  navbar-dark">
     <a class="navbar-brand" href="#">
       <img src="img/dolar.png" alt="logo" style="width:50px;">
@@ -23,7 +23,7 @@
       <ul class="navbar-nav">
         <li class="nav-item ">
           <a style="color: white;margin-left: 3px;margin-top: 3px;" class="nav-link btn btn-primary "
-            href="meuperfil.html">Painel</a>
+          href="painel.html">Painel</a>
         </li>
         <li class="nav-item">
           <a style="color: white;margin-left: 3px;margin-top: 3px;" class="nav-link btn btn-primary "
@@ -44,42 +44,65 @@
       </ul>
     </div>
   </nav>
-
-  <div class="row">
-    <div class="col-lg-4">
-
-      <div style="   border-radius:20px ;" class="card a2 ml-1 mr-1">
-        <h1 >Receitas</h1>   <h1 id="Receitas"></h1>
-       
-      </div>
-
+ 
+<div class="row">
+<div class="col-lg-4">
+  <div style="   border-radius:20px ;" class="card a2 ml-2">
+    <div style="   border-radius:20px ;" class="card-header color">
+      <img src="img/cash.png"> <h2 class="textlogin">Lançar valores</h2>
+      
     </div>
-    <div class="col-lg-4">
-      <div style="   border-radius:20px ;" class="card a2 ml-1 mr-1">
-        <h1 >Total</h1>   <h1 id="total"></h1>
+    <div style="   border-radius:20px ;"  class="card-body color ">
         
-      </div>
-
+      <input autocomplete="off" placeholder="Valor"  class="form-control " id="valor" type="number">
+      
+      <h5 class=" mt-2">contas</h5>
+      <select name="lancamentos"  class="form-control" id="lancamentos"></select>
+      
+      
+      
+      <button onclick="lancamentos()" class="btn btn-success mt-3">Salvar</button>
+      <button onclick="AlterarE()" class="btn btn-success mt-3">Alterar</button>
+           
     </div>
 
+  </div>
 
-      <div class="col-lg-4">
-
-        <div style="   border-radius:20px ;" class="card a2 ml-1 mr-1">
-          <h1 >Despesas</h1>   <h1 id="Despesas"></h1>
-         
-        </div>
-
-      </div>
+</div>
 
 
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="js/cadastro.js"></script>
+
+<div class="col-lg-8">
+
+  <h2 style="color: white;">Lista de contas</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+       
+        <th scope="col">Conta</th>
+        <th scope="col">Valor</th>
+        <th  scope="col ">Data</th>
+        <th  scope="col ">Editar/Apagar</th>
+      </tr>
+    </thead>
+    <tbody id="bad">
+        </tbody>
+        </table>
+ 
+ 
+
+  
+</div>
+
+
+
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="js/cadastro.js"></script>
 
 </body>
-
 </html>
