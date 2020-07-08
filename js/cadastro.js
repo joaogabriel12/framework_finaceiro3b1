@@ -1,3 +1,5 @@
+//colocar um id para fazer alteraços e exclusao=>categoria,contas,entradas e saidas
+
 
 
 
@@ -620,7 +622,10 @@ console.log(lancamentos)
 //    document.getElementById("btn").disabled=true
 listartabelacontas()
 
+
 }
+
+
        
 
 
